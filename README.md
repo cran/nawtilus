@@ -12,35 +12,40 @@ treatment effects or the average treatment effects on the treated) with
 the inverse probability weighting where propensity scores are estimated
 using estimating equations suitable for the parameter of interest. It
 also provides several tools for summarizing and checking the estimation
-results, including covariate balance check and an inverse probability
+results, including a covariate balance check and an inverse probability
 weights plot.
 
 <br>
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/nawtilus)](https://CRAN.R-project.org/package=nawtilus)
+[![metacran
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/nawtilus)](https://cran.r-project.org/package=nawtilus)
 <!-- badges: end -->
 
 ## How to cite
 
-<font size="4"> Hiroto Katsumata. 2020. nawtilus: An R package for the
-Navigated Weighting. R package version 0.1.1.9000
-<https://github.com/hirotokatsumata/nawtilus/> </font>
+<font size="4"> Katsumata, Hiroto. 2020. “Navigated Weighting to Improve
+Inverse Probability Weighting for Missing Data Problems and Causal
+Inference.” Working Paper,
+[arxiv:2005.10998](https://arxiv.org/abs/2005.10998).
+
+<font size="4"> Katsumata, Hiroto. 2020. nawtilus: Navigated Weighting
+for the Inverse Probability Weighting. R package version 0.1.4.
+<https://CRAN.R-project.org/package=nawtilus>. </font>
 
 ## Installation
 
-<!--
-You can install the released version of nawtilus from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of nawtilus from
+[CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("nawtilus")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
--->
-
-You can install the development version from
-[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -55,7 +60,7 @@ of interest.
 First, load the package and make toy data.
 
 ``` r
-# Load the function
+# Load the package
 library(nawtilus)
 
 # Make toy data
@@ -90,10 +95,6 @@ function with α = 2).
 fit <- nawt(formula = formula_c, outcome = "y", estimand = "ATT", 
             method = "score", data = df, alpha = 2)
 #> [1] "Estimate weights for the ATT estimation by (weighted) score conditions"
-#> [1] 1000
-#> [1] 1000
-#> [1] 1000
-#> [1] 1000
 ```
 
 You can summarize the results easily with `summary()`.
@@ -124,6 +125,9 @@ summary(fit)
 #>   control:   156.68
 ```
 
+Note that the estimated coefficients except for `est` are for the
+propensity score estimation.
+
 Check covariate balance between the treatment and control groups before
 and after the NAWT with `cbcheck()`.
 
@@ -140,8 +144,7 @@ par <- oldpar # Just for adjusting plot margins
 ```
 
 Let’s compare the inverse probability weights estimated by the nawt with
-those estimated by the standard logistic regression with
-`plot()`.
+those estimated by the standard logistic regression with `plot()`.
 
 ``` r
 plot(fit)
@@ -151,7 +154,7 @@ plot(fit)
 
 Finally, check the weights used in propensity score estimation and
 distribution of the estimated propensity scores in the NAWT with
-`plot_onega()`.
+`plot_omega()`.
 
 ``` r
 plot_omega(fit)
